@@ -12,9 +12,9 @@ import (
 func main() {
 	usage := stringutils.TrimLeadingTabs(`
 		Usage:
-		  git-bus-factor login
-		  git-bus-factor logout
 		  git-bus-factor <repository>
+		  git-bus-factor --login
+		  git-bus-factor --logout
 
 		Options:
 		  -h --help          Show this screen.
@@ -33,23 +33,23 @@ func main() {
 
 	arguments, _ := docopt.Parse(usage, nil, true, "Git Bus Factor 0.0.0", false)
 
-	if arguments["login"] == true {
+	if arguments["--login"] == true {
 		githubApi.Login()
 
-	} else if arguments["logout"] == true {
+	} else if arguments["--logout"] == true {
 		githubApi.Logout()
 
 	} else {
-
-		if !githubApi.HasToken() {
-			githubApi.Login()
-		}
 
 		if repo, ok := arguments["<repository>"].(string); ok {
 			owner, name, err := githubApi.ParseURL(string(repo))
 			if err != nil {
 				fmt.Println(err)
 				return
+			}
+
+			if !githubApi.HasToken() {
+				githubApi.Login()
 			}
 
 			busFactor.Print(owner, name)
