@@ -11,3 +11,6 @@ import:
   version: 0.1.0
 - package: github.com/josa42/go-gitutils
   version: 0.4.0
+- package: github.com/lunixbochs/go-keychain
+- package: github.com/AlecAivazis/survey
+  version: 1.1.1

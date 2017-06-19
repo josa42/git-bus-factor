@@ -3,6 +3,7 @@ package main
 import (
 	docopt "github.com/docopt/docopt-go"
 	"github.com/josa42/git-bus-factor/busFactor"
+	"github.com/josa42/git-bus-factor/github"
 	stringutils "github.com/josa42/go-stringutils"
 )
 
@@ -10,6 +11,7 @@ func main() {
 	usage := stringutils.TrimLeadingTabs(`
 		Usage:
 		  git-bus-factor
+		  git-bus-factor login
 
 		Options:
 		  -h --help          Show this screen.
@@ -26,8 +28,12 @@ func main() {
 		  🚌   Bus factor. Chances of the project to become abandoned once current collaborators stop updating it. The higher - the worse.
   `)
 
-	// // arguments, _ :=
-	docopt.Parse(usage, nil, true, "Git Bus Factor 0.0.0", false)
+	arguments, _ := docopt.Parse(usage, nil, true, "Git Bus Factor 0.0.0", false)
 
-	busFactor.Print()
+	if arguments["login"] == true {
+		github.Login()
+
+	} else {
+		busFactor.Print()
+	}
 }

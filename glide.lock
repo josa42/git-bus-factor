@@ -1,10 +1,27 @@
-hash: adad31e1848eb327e997aaaf1249bf506d1d263b72e68d809498c38906c89470
-updated: 2017-06-19T15:47:24.239331036+02:00
+hash: cd16b2befa7282e830ee2318411facb88c30cda3a8b23c2096efc10500e1d42e
+updated: 2017-06-19T16:25:41.649544384+02:00
 imports:
+- name: github.com/AlecAivazis/survey
+  version: 1554c7b37f4828681d92364198947c1fec1604b2
+  subpackages:
+  - core
+  - terminal
 - name: github.com/docopt/docopt-go
   version: 784ddc588536785e7299f7272f39101f7faccc3f
 - name: github.com/josa42/go-gitutils
   version: 58ef480c7753db315d2228d1150a314a470935f5
 - name: github.com/josa42/go-stringutils
   version: e129a8b9917f96ed0f632e9c523c068e9d78c486
+- name: github.com/lunixbochs/go-keychain
+  version: fb14aa72bcbbb633ddb678077b38e500508b2cf6
+- name: github.com/mattn/go-colorable
+  version: 941b50ebc6efddf4c41c8e4537a5f68a4e686b24
+- name: github.com/mattn/go-isatty
+  version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
+- name: github.com/mgutz/ansi
+  version: 9520e82c474b0a04dd04f8a40959027271bab992
+- name: golang.org/x/sys
+  version: fb4cac33e3196ff7f507ab9b2d2a44b0142f5b5a
+  subpackages:
+  - unix
 testImports: []
