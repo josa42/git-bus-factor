@@ -12,6 +12,7 @@ func main() {
 		Usage:
 		  git-bus-factor
 		  git-bus-factor login
+		  git-bus-factor logout
 
 		Options:
 		  -h --help          Show this screen.
@@ -32,6 +33,9 @@ func main() {
 
 	if arguments["login"] == true {
 		github.Login()
+
+	} else if arguments["logout"] == true {
+		github.Logout()
 
 	} else {
 		busFactor.Print()

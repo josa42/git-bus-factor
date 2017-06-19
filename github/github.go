@@ -1,6 +1,8 @@
 package github
 
 import (
+	"fmt"
+
 	"github.com/AlecAivazis/survey"
 	keychain "github.com/lunixbochs/go-keychain"
 )
@@ -34,6 +36,13 @@ func Login() {
 	}
 
 	setToken(token)
+	fmt.Println("Added token to keychain")
+}
+
+// Logout :
+func Logout() {
+	removeToken()
+	fmt.Println("Removed token from keychain")
 }
 
 // # Token
