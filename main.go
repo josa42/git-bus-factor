@@ -1,18 +1,20 @@
 package main
 
 import (
+	"fmt"
+
 	docopt "github.com/docopt/docopt-go"
 	"github.com/josa42/git-bus-factor/busFactor"
-	"github.com/josa42/git-bus-factor/github"
+	"github.com/josa42/git-bus-factor/githubApi"
 	stringutils "github.com/josa42/go-stringutils"
 )
 
 func main() {
 	usage := stringutils.TrimLeadingTabs(`
 		Usage:
-		  git-bus-factor
 		  git-bus-factor login
 		  git-bus-factor logout
+		  git-bus-factor <repository>
 
 		Options:
 		  -h --help          Show this screen.
@@ -32,12 +34,25 @@ func main() {
 	arguments, _ := docopt.Parse(usage, nil, true, "Git Bus Factor 0.0.0", false)
 
 	if arguments["login"] == true {
-		github.Login()
+		githubApi.Login()
 
 	} else if arguments["logout"] == true {
-		github.Logout()
+		githubApi.Logout()
 
 	} else {
-		busFactor.Print()
+
+		if !githubApi.HasToken() {
+			githubApi.Login()
+		}
+
+		if repo, ok := arguments["<repository>"].(string); ok {
+			owner, name, err := githubApi.ParseURL(string(repo))
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			busFactor.Print(owner, name)
+		}
 	}
 }
