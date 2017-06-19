@@ -6,13 +6,14 @@ import (
 	docopt "github.com/docopt/docopt-go"
 	"github.com/josa42/git-bus-factor/busFactor"
 	"github.com/josa42/git-bus-factor/githubApi"
+	gitutils "github.com/josa42/go-gitutils"
 	stringutils "github.com/josa42/go-stringutils"
 )
 
 func main() {
 	usage := stringutils.TrimLeadingTabs(`
 		Usage:
-		  git-bus-factor <repository>
+		  git-bus-factor [<repository>]
 		  git-bus-factor --login
 		  git-bus-factor --logout
 
@@ -41,18 +42,27 @@ func main() {
 
 	} else {
 
+		repoURL := ""
 		if repo, ok := arguments["<repository>"].(string); ok {
-			owner, name, err := githubApi.ParseURL(string(repo))
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
+			repoURL = repo
 
-			if !githubApi.HasToken() {
-				githubApi.Login()
+		} else {
+			remotes := gitutils.Remotes()
+			if remotes["origin"].Fetch != "" {
+				repoURL = remotes["origin"].Fetch
 			}
-
-			busFactor.Print(owner, name)
 		}
+
+		owner, name, err := githubApi.ParseURL(repoURL)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		if !githubApi.HasToken() {
+			githubApi.Login()
+		}
+
+		busFactor.Print(owner, name)
 	}
 }

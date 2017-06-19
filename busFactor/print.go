@@ -62,7 +62,7 @@ func Print(owner string, name string) {
 		prsRatio := (float64(openPRsCount) / float64(totalPRsCount)) * 100
 		fmt.Printf("🍻  %d PRs: %d closed; %d open; %.2f%% are closed.\n", totalPRsCount, closedPRsCount, openPRsCount, prsRatio)
 	} else {
-		fmt.Printf("🍻  No PRs opened yet for this repository.")
+		fmt.Printf("🍻  No PRs opened yet for this repository.\n")
 	}
 
 	// Refactoring

@@ -19,18 +19,30 @@ const maxRetries = 3
 
 // ParseURL :
 func ParseURL(url string) (string, string, error) {
-	re1, err := regexp.Compile(`^([^/]+)/([^/]+)$`)
+	if owner, name := matchURL(url, `^([^/:.]+)/([^/:.]+)$`); owner != "" {
+		return owner, name, nil
+	}
+
+	if owner, name := matchURL(url, `github\.com/([^/:.]+)/([^/:.]+)(\.git)?$`); owner != "" {
+		return owner, name, nil
+	}
+
+	if owner, name := matchURL(url, `git@github\.com:([^/:..]+)/([^/:..]+)(\.git)?$`); owner != "" {
+		return owner, name, nil
+	}
+
+	return "", "", errors.New("Repo URL cannot be matched")
+}
+
+func matchURL(url string, pattern string) (string, string) {
+	re1, err := regexp.Compile(pattern)
 	result := re1.FindStringSubmatch(url)
 
-	if err != nil {
-		return "", "", err
+	if err != nil || len(result) == 0 {
+		return "", ""
 	}
 
-	if len(result) == 0 {
-		return "", "", errors.New("Repo URL cannot be matched")
-	}
-
-	return result[1], result[2], nil
+	return result[1], result[2]
 }
 
 // Login :
