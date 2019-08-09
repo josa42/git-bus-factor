@@ -9,7 +9,7 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/AlecAivazis/survey"
+	"gopkg.in/AlecAivazis/survey.v1"
 	"github.com/google/go-github/github"
 	keychain "github.com/lunixbochs/go-keychain"
 )
@@ -62,12 +62,11 @@ func Login() {
 	token := ""
 	prompt := &survey.Password{
 		Message: "Token:",
-		Help:    "Create a GitHub access token at https://github.com/settings/tokens",
+		Help:    "Create a GitHub access token at https://github.com/settings/tokens - Check: public_repo",
 	}
 	survey.AskOne(prompt, &token, nil)
 
 	if token == "" {
-		// fmt.Println("Error: ")
 		return
 	}
 
@@ -93,8 +92,7 @@ func RepoInfo(owner string, name string) (*github.Repository, error) {
 
 	repo, _, err := client.Repositories.Get(ctx, owner, name)
 	if err != nil {
-		println("err")
-		println(err)
+		fmt.Printf("%s\n", err)
 
 		return nil, err
 	}

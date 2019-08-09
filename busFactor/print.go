@@ -3,6 +3,7 @@ package busFactor
 import (
 	"fmt"
 	"math"
+	"os"
 
 	"github.com/josa42/git-bus-factor/githubApi"
 	"github.com/justincampbell/timeago"
@@ -17,7 +18,8 @@ const contributionThreshold = 0.7
 func Print(owner string, name string) {
 	repo, err := githubApi.RepoInfo(owner, name)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("RepoInfo: %s\n", err)
+		os.Exit(1)
 	}
 
 	// Forks
