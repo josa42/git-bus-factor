@@ -82,7 +82,7 @@ func Print(owner string, name string) {
 
 	refactingRatio := (math.Abs(float64(deletions)) / float64(additions)) * 100
 
-	fmt.Printf("🛠️  Deletions to additions ratio: %.2f%% (%d/%d).\n", refactingRatio, deletions, additions)
+	fmt.Printf("🛠️   Deletions to additions ratio: %.2f%% (%d/%d).\n", refactingRatio, deletions, additions)
 
 	// Releases
 
