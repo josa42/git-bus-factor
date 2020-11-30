@@ -32,7 +32,7 @@ func main() {
 		  🚌   Bus factor. Chances of the project to become abandoned once current collaborators stop updating it. The higher - the worse.
   `)
 
-	arguments, _ := docopt.Parse(usage, nil, true, "git-bus-factor 0.3.0", false)
+	arguments, _ := docopt.Parse(usage, nil, true, "git-bus-factor v0.4.0", false)
 
 	if arguments["--login"] == true {
 		githubApi.Login()
