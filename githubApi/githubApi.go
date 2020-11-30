@@ -4,14 +4,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
 	"regexp"
 	"time"
 
 	"golang.org/x/oauth2"
 
-	"gopkg.in/AlecAivazis/survey.v1"
 	"github.com/google/go-github/github"
 	keychain "github.com/lunixbochs/go-keychain"
+	"gopkg.in/AlecAivazis/survey.v1"
 )
 
 const keychainService = "github.com/josa42/git-bus-factor"
@@ -203,8 +204,11 @@ func client(ctx context.Context) *github.Client {
 }
 
 func getToken() string {
-	token, error := keychain.Find(keychainService, "token")
-	if error == nil && token != "" {
+	if token := os.Getenv("GITHUB_TOKEN"); token != "" {
+		return token
+	}
+
+	if token, error := keychain.Find(keychainService, "token"); error == nil && token != "" {
 		return token
 	}
 
